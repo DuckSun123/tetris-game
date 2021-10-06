@@ -9,7 +9,7 @@ const GAME_ROWS = 20;
 const GAME_COLS = 10;
 
 let score = 0;
-let duration = 500;
+let duration = 1000;
 let downInterval;
 let tempMovingItem;
 
@@ -100,11 +100,13 @@ function checkMatch() {
         matched = false;
       }
     });
+
     if (matched) {
       child.remove();
       prependNewLine();
       score++;
       scoreDisply.innerText = score;
+      duration *= 0.9;
     }
   });
 
@@ -113,6 +115,7 @@ function checkMatch() {
 
 function generateNewBlock() {
   clearInterval(downInterval);
+
   downInterval = setInterval(() => {
     moveBlock("top", 1);
   }, duration);
@@ -125,8 +128,12 @@ function generateNewBlock() {
   movingItem.left = 3;
   movingItem.direction = 0;
   tempMovingItem = { ...movingItem };
+
   renderBlocks();
 }
+
+console.log(duration);
+console.log(score);
 
 function checkEmpty(target) {
   if (!target || target.classList.contains("seized")) {
@@ -177,12 +184,13 @@ document.addEventListener("keydown", (e) => {
     default:
       break;
   }
-  console.log(e);
-  console.log(e.keyCode);
 });
 
 restartBtn.addEventListener("click", () => {
   playground.innerHTML = "";
   gameText.style.display = "none";
+  duration = 1000;
+  score = 0;
+  scoreDisply.innerText = score;
   init();
 });
