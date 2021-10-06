@@ -110,6 +110,9 @@ function checkMatch() {
     }
   });
 
+  console.log(duration);
+  console.log(score);
+
   generateNewBlock();
 }
 
@@ -131,9 +134,6 @@ function generateNewBlock() {
 
   renderBlocks();
 }
-
-console.log(duration);
-console.log(score);
 
 function checkEmpty(target) {
   if (!target || target.classList.contains("seized")) {
